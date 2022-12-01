@@ -1,5 +1,20 @@
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { Database } from "../lib/database.types";
+
 import type { AppProps } from "next/app";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  const [supabaseClient] = useState(() =>
+    createBrowserSupabaseClient<Database>()
+  );
+  return (
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <Component {...pageProps} />
+    </SessionContextProvider>
+  );
 }
