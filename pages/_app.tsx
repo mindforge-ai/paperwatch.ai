@@ -4,6 +4,7 @@ import { Database } from "../lib/database.types";
 
 import type { AppProps } from "next/app";
 import { useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [supabaseClient] = useState(() =>
@@ -14,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
+      <Toaster />
       <Component {...pageProps} />
     </SessionContextProvider>
   );
